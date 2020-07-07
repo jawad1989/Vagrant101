@@ -69,7 +69,7 @@ in VagrantFile below code sets up shared folder/directory between host and VM /d
 # Vagrant Networking
 Port Forwarding
   ## Access NGINX from HOST
-   in vagrantFile uncomment the line 31, you can change ports
-   `config.vm.network "forwarded_port", guest: 80, host: 8088, host_ip: "127.0.0.1"`
+  in vagrantFile uncomment the line 31, you can change ports
+  `config.vm.network "forwarded_port", guest: 80, host: 8088, host_ip: "127.0.0.1"`
 Private Networks
 Public Networks
