@@ -51,3 +51,10 @@ vagrant ssh
 vagrant halt <VM_ID>
 
 ```
+
+# Create new vagrant file
+Open Visual Code
+1. mkdir vagrant-code
+2. cd in directory
+3. core -r . // opens VS code in same directory
+4. vagrant init //creates a new vagrant file
