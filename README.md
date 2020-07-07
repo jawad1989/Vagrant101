@@ -58,3 +58,18 @@ Open Visual Code
 2. cd in directory
 3. core -r . // opens VS code in same directory
 4. vagrant init //creates a new vagrant file
+5. vagrant up //this will create the box
+6. vagrant ssh
+7. vagrant reload //restart VM
+
+# shared folder
+in VagrantFile below code sets up shared folder/directory between host and VM /data in host /vagrant_data is VM
+# config.vm.synced_folder "../data", "/vagrant_data"
+
+# Vagrant Networking
+Port Forwarding
+  ## Access NGINX from HOST
+   in vagrantFile uncomment the line 31, you can change ports
+   `config.vm.network "forwarded_port", guest: 80, host: 8088, host_ip: "127.0.0.1"`
+Private Networks
+Public Networks
