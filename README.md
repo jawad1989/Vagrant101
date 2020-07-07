@@ -52,7 +52,7 @@ vagrant halt <VM_ID>
 
 ```
 
-# Create new vagrant file
+# 4. Create new vagrant file
 Open Visual Code
 1. mkdir vagrant-code
 2. cd in directory
@@ -62,16 +62,19 @@ Open Visual Code
 6. vagrant ssh
 7. vagrant reload //restart VM
 
-# shared folder
-in VagrantFile below code sets up shared folder/directory between host and VM /data in host /vagrant_data is VM
-# config.vm.synced_folder "../data", "/vagrant_data"
+# 5. Shared folder
+ In VagrantFile below code sets up shared folder/directory between host and VM /data in host /vagrant_data is VM
+ ```
+ config.vm.synced_folder "../data", "/vagrant_data"
+ ```
 
-# Vagrant Networking
-Port Forwarding
-  ## Access NGINX from HOST
+# 6. Vagrant Networking
+## 1. Port Forwarding
+  #### Access NGINX from HOST
   in vagrantFile uncomment the line 31, you can change ports
   ```
   config.vm.network "forwarded_port", guest: 80, host: 8088, host_ip: "127.0.0.1"
   ```
-Private Networks
-Public Networks
+## 2. Private Networks
+
+## 3. Public Networks
