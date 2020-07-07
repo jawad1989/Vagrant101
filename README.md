@@ -86,13 +86,13 @@ config.vm.network "private_network", type: "dhcp"
 * ifconfig //get the ip and goto host browser and test the nginx now on port 80 http://172.28.128.3:80/
 ## 3. Public Networks
 
-# 7. Vgagrant Providers
+# 7. Vagrant Providers
 1. Hyper-V
 2. Virtual Box
 3. Docker Containers
 
 * Provider section is used to set provider-specific configurations
-in your VM run below commands
+in your VM run below commands, currently we have 1 GB ram and 1 CPU
 * to get memory/RAM
 ```
 vmstat -s
@@ -100,5 +100,16 @@ vmstat -s
 * to get cpu
 ```
 lscpu
+```
+* we will change ram to 512 MB and cpu to 2, goto vagrantFile and between line 52-59 do the below changes and reload vagrant. You will see the changes.
+```
+config.vm.provider "virtualbox" do |vb|
+  #   # Display the VirtualBox GUI when booting the machine
+  #   vb.gui = true
+  #
+  #   # Customize the amount of memory on the VM:
+     vb.memory = "512"
+     vb.cpus = 2
+   end
 ```
 
