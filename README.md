@@ -76,5 +76,29 @@ Open Visual Code
   config.vm.network "forwarded_port", guest: 80, host: 8088, host_ip: "127.0.0.1"
   ```
 ## 2. Private Networks
-
+By using this we can create a dhcp network and this will assig a non changing static IP to VM
+*  VagrantFile Line 35 change 
+```
+config.vm.network "private_network", type: "dhcp"
+```
+* vagrant reload
+* vagrant ssh
+* ifconfig //get the ip and goto host browser and test the nginx now on port 80 http://172.28.128.3:80/
 ## 3. Public Networks
+
+# 7. Vgagrant Providers
+1. Hyper-V
+2. Virtual Box
+3. Docker Containers
+
+* Provider section is used to set provider-specific configurations
+in your VM run below commands
+* to get memory/RAM
+```
+vmstat -s
+```
+* to get cpu
+```
+lscpu
+```
+
