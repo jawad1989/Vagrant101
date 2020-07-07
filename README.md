@@ -92,6 +92,8 @@ config.vm.network "private_network", type: "dhcp"
 3. Docker Containers
 
 * Provider section is used to set provider-specific configurations
+
+### Update RAM and CPU
 in your VM run below commands, currently we have 1 GB ram and 1 CPU
 * to get memory/RAM
 ```
@@ -113,3 +115,88 @@ config.vm.provider "virtualbox" do |vb|
    end
 ```
 
+### Create a GUI for VM
+
+in your vagrant file do below changes:
+```
+   config.vm.provider "virtualbox" do |vb|
+  #   # Display the VirtualBox GUI when booting the machine
+     vb.gui = true
+  #
+  #   # Customize the amount of memory on the VM:
+     vb.memory = "512"
+     vb.cpus = 2
+     vb.customize ["modifyvm", :id, "--vram", "16"]
+   end
+```
+* vagrant reload and vagrant ssh
+* check VideoMemory
+```
+ lspci -v -s 00:02.0
+```
+
+# 7. Vagrant Provisioners
+* scripts  in a vagrantfile or externaly in a separate file, 
+* by default scripts run first time a box runs
+* can install software, download app code and set configuration needed for dev environment
+* by default provisioners run only first time, we can change options to configure to run on every boot
+
+### create a provisioner - install nginx
+* we create a new directory and name it `provisioners` and create a new file `nginx-install.sh`
+* in vagrant file we add a new line to call this external file
+```
+# Enable provisioning with a shell script. Additional provisioners such as
+  # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
+  # documentation for more information about their specific syntax and use.
+  # config.vm.provision "shell", inline: <<-SHELL
+   
+   config.vm.provision "shell", path: "provisioners/nginx-install.sh"
+  
+  #   apt-get update
+  #   apt-get install -y apache2
+  # SHELL
+```
+* recreate the vagrant box
+```
+vagrant halt
+vagrant destory
+vagrant up
+vagrant ssh
+nginx -v
+```
+### install multiple provisoers
+we can create multiple provisioners and in vagrantFile we ca call those in order to run
+```
+   config.vm.provision "shell", path: "provisioners/install-mongo.sh"
+   config.vm.provision "shell", path: "provisioners/install-node.sh"
+```
+* the folder we vagrant init run from is by default a shared directory in vagrant VM
+
+
+
+# 8. Running Multiple VMs
+for creating multiple boxes we have to add conf in vagrant file, in example below we are creating two boxes one more mongo other for node
+```
+# Every Vagrant development environment requires a box. You can search for
+  # boxes at https://vagrantcloud.com/search.
+ 
+  config.vm.define "mongoDB" do |mongoDB| 
+    mongoDB.vm.box = "bento/ubuntu-16.04" # base image
+    mongoDB.vm.provider "virtualbox" do |vb| 
+      vb.memory = "512"
+    end
+    mongoDB.vm.network "private_network", ip: "192.168.33.20" # create private network and set an IP
+    mongoDB.vm.provision "file", source: "files/mongod.conf", destination: "~/mongod.conf"
+    mongoDB.vm.provision "shell", path: "provisioners/install-mongo.sh"
+  end
+
+  config.vm.define "node" do |node|
+    node.vm.box ="bento/ubuntu-16.04"
+    node.vm.network "forwarded_port", guest: 3000, host:8080
+    node.vm.provider "virtualbox" do |vb|
+      vb.memory = "512"
+    end
+    node.vm.network "private_network", ip: "192.168.33.10"
+    node.vm.provision "shell", path: "provisioners/install-node.sh"
+  end
+```
