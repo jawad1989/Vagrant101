@@ -3,6 +3,7 @@ as per wikipedia: Vagrant is an open-source software product for building and ma
 * Developers can create portable environments
 * vagrant save boxes in cache, if not removed it will pick from cache
 * runs headless VM
+* ***base boxes***: boxes having only OS
 
 # 2. Vagrant Components:
 1. CLI : Start stop vagrant VMs 
@@ -176,6 +177,7 @@ we can create multiple provisioners and in vagrantFile we ca call those in order
 
 # 8. Running Multiple VMs
 for creating multiple boxes we have to add conf in vagrant file, in example below we are creating two boxes one more mongo other for node
+* config.vm.define: craeteds a new object that can be configured independantly, to allow single vagrantFile to define multiple boxes
 ```
 # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
@@ -205,3 +207,7 @@ for creating multiple boxes we have to add conf in vagrant file, in example belo
 vagrant ssh node
 vagrant ssh mongoDB
 ```
+
+
+# 8. Create vagrant - Base Box
+we can upload our base box with installed software on vagrant cloud using package commmand
