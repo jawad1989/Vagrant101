@@ -200,3 +200,8 @@ for creating multiple boxes we have to add conf in vagrant file, in example belo
     node.vm.provision "shell", path: "provisioners/install-node.sh"
   end
 ```
+* Connecting/ssh is different then single box
+```
+vagrant ssh node
+vagrant ssh mongoDB
+```
